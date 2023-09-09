@@ -9,6 +9,12 @@ const router = createRouter({
       name: 'home',
       component: HomeView
     },
+    {
+      path: '/country/:id',
+      name: 'country',
+      props: true,
+      component: () => import('../views/SelectedCountry.vue')
+    },
   ]
 })
 

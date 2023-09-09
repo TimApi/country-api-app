@@ -1,25 +1,20 @@
 <script setup lang="ts">
-import { ref, onMounted} from 'vue'
-import type { ICountry } from '@/repositorys/countryDataRepository';
-import countryDataService from '@/services/countryDataService';
+import { onMounted } from 'vue'
 import CountryItem from '../components/Country/CountryItem.vue'
+import { useCountryStore } from '@/stores/countryStore';
 
-const countryData = ref<ICountry[]>()
 
-const getCountryData =  async () => {
-   const response = await countryDataService.getCountryData()
-   countryData.value = response.data
-}
+const store = useCountryStore()
 
 onMounted(() => {
-    getCountryData()
+  store.getCountryData()
 })
-
 </script>
 
 <template>
-    <div class="container">
-        <h2 class="text-red">test</h2>
-    </div>
-    <CountryItem v-for="(country, index) in countryData" :key="index" :data="country" />
+  <div class="container">   
+    <ul class="flex flex-wrap">
+      <CountryItem v-for="(country, index) in store.countryData" :key="index" :data="country" />
+    </ul>
+  </div>
 </template>
